@@ -61,6 +61,7 @@ public final class UsuarioDaoImpl implements UsuarioDao {
 
     @Override
     public Usuario buscar(String nome) throws IOException, ClassNotFoundException {
+       
         List<Usuario> usuarios;
         usuarios = listar();
 
@@ -75,6 +76,7 @@ public final class UsuarioDaoImpl implements UsuarioDao {
 
     @Override
     public List<Usuario> listar() throws IOException, ClassNotFoundException {
+        
         if (file.length() > 0) {
 
             ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
