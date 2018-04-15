@@ -24,6 +24,9 @@ public class Funcionario implements Serializable{
         this.dataNasc = dataNasc;
     }
 
+    public Funcionario() {
+    }
+
     public String getNome() {
         return nome;
     }

@@ -5,33 +5,32 @@
  */
 package visao;
 
-import controle.UsuarioDao;
-import controle.UsuarioDaoImpl;
+import controle.FuncionarioDao;
+import controle.FuncionarioDaoImpl;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import modelo.Usuario;
+import modelo.Funcionario;
 
 /**
  *
  * @author caiq-
  */
-public class TelaUsuario extends javax.swing.JFrame {
+public class TelaFuncionario extends javax.swing.JFrame {
 
     /**
-     * Creates new form TelaUsuario
+     * Creates new form TelaFuncionario
      */
-    private UsuarioDao daoUser;
+    private FuncionarioDao daoFunc;
 
-    public TelaUsuario() {
+    public TelaFuncionario() {
 
         try {
-            daoUser = new UsuarioDaoImpl();
+            daoFunc = new FuncionarioDaoImpl();
         } catch (IOException | ClassNotFoundException ex) {
             Logger.getLogger(TelaUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         initComponents();
     }
 
@@ -48,9 +47,11 @@ public class TelaUsuario extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         nome = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        senha = new javax.swing.JTextField();
+        cpf = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        dataNasc = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
@@ -75,20 +76,16 @@ public class TelaUsuario extends javax.swing.JFrame {
 
         jLabel1.setText("Nome:");
 
-        nome.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nomeActionPerformed(evt);
-            }
-        });
+        jLabel2.setText("CPF:");
 
-        jButton1.setText("Buscar");
+        jButton1.setText("buscar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jLabel2.setText("Senha:");
+        jLabel3.setText("Data Nascimento:");
 
         jButton2.setText("Salvar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -104,7 +101,7 @@ public class TelaUsuario extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setText("Atualiar");
+        jButton4.setText("Atualizar");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -119,25 +116,22 @@ public class TelaUsuario extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(nome, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(senha, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addContainerGap())
+                    .addComponent(nome)
+                    .addComponent(cpf)
+                    .addComponent(dataNasc)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
                             .addComponent(jButton1)
-                            .addComponent(jLabel2))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addComponent(jLabel3)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -147,17 +141,21 @@ public class TelaUsuario extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(nome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(senha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                .addComponent(cpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(dataNasc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
-                    .addComponent(jButton4)
-                    .addComponent(jButton3))
+                    .addComponent(jButton3)
+                    .addComponent(jButton4))
                 .addContainerGap())
         );
 
@@ -175,29 +173,11 @@ public class TelaUsuario extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        
-        Usuario u = montarObjeto();
-        
-        try{
-            if(daoUser.deletar(u)){
-                JOptionPane.showMessageDialog(null, "Removido com sucesso!");
-                limparCampo();
-            } else{
-                JOptionPane.showMessageDialog(null, "Usuario não encontrado");
-            }
-        } catch(IOException ex){
-            JOptionPane.showMessageDialog(null, "falha!");
-        } catch (ClassNotFoundException ex) {
-           JOptionPane.showMessageDialog(null, "classe n encontrada");
-        }
-    }//GEN-LAST:event_jButton3ActionPerformed
-
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Usuario u = montarObjeto();
+        Funcionario f = montarObjeto();
 
         try {
-            if (daoUser.salvar(u)) {
+            if (daoFunc.salvar(f)) {
                 JOptionPane.showMessageDialog(null, "Salvou!");
                 limparCampo();
             } else {
@@ -210,47 +190,57 @@ public class TelaUsuario extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void nomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nomeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nomeActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
-        Usuario u = null;
+        Funcionario f = null;
 
         try {
-            u = daoUser.buscar(nome.getText());
+            f = daoFunc.buscar(cpf.getText());
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Falha");
         } catch (ClassNotFoundException ex) {
             JOptionPane.showMessageDialog(null, "não achou");
         }
 
-        if (u == null) {
+        if (f == null) {
             JOptionPane.showMessageDialog(null, "não encontrado");
         } else {
-
-            senha.setText(u.getSenha());
+            nome.setText(f.getNome());
+            dataNasc.setText(f.getDataNasc());
         }
-
-
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        Usuario u = montarObjeto();
+        Funcionario f = montarObjeto();
 
         try {
-            if (daoUser.atualizar(u)) {
+            if (daoFunc.atualizar(f)) {
                 JOptionPane.showMessageDialog(null, "Atualizado");
             } else {
-                JOptionPane.showMessageDialog(null, "Não encontrado");
+                JOptionPane.showMessageDialog(null, "Nãp encontrado");
             }
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "FALHA");
         } catch (ClassNotFoundException ex) {
-            JOptionPane.showMessageDialog(null, "Classe não encontrada");
+            JOptionPane.showMessageDialog(null, "classe não encontrada");
         }
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        Funcionario f = montarObjeto();
+        
+        try{
+            if(daoFunc.deletar(f)){
+                JOptionPane.showMessageDialog(null, "Removido com sucesso!");
+                limparCampo();
+            } else{
+                JOptionPane.showMessageDialog(null, "Usuario não encontrado");
+            }
+        } catch(IOException ex){
+            JOptionPane.showMessageDialog(null, "falha!");
+        } catch (ClassNotFoundException ex) {
+           JOptionPane.showMessageDialog(null, "classe n encontrada");
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -269,53 +259,54 @@ public class TelaUsuario extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaFuncionario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaFuncionario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaFuncionario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaFuncionario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaUsuario().setVisible(true);
+                new TelaFuncionario().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField cpf;
+    private javax.swing.JTextField dataNasc;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField nome;
-    private javax.swing.JTextField senha;
     // End of variables declaration//GEN-END:variables
 
-    private Usuario montarObjeto() {
+    private Funcionario montarObjeto() {
+        Funcionario f;
 
-        Usuario u;
+        f = new Funcionario();
 
-        u = new Usuario();
+        f.setNome(nome.getText());
+        f.setCpf(cpf.getText());
+        f.setDataNasc(dataNasc.getText());
 
-        u.setNome(nome.getText());
-        u.setSenha(senha.getText());
-
-        return u;
+        return f;
     }
 
     private void limparCampo() {
-
         nome.setText("");
-        senha.setText("");
-
+        cpf.setText("");
+        dataNasc.setText("");
     }
 }

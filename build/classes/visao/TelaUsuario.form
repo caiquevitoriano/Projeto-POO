@@ -60,7 +60,7 @@
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jButton4" max="32767" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jButton3" max="32767" attributes="0"/>
+                                  <Component id="jButton3" min="-2" pref="89" max="-2" attributes="0"/>
                               </Group>
                               <Component id="senha" alignment="0" max="32767" attributes="0"/>
                           </Group>
