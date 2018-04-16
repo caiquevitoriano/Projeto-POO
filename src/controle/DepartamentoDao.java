@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.List;
 import modelo.Departamento;
 
-/**
+/** Interface Dao de departamento
  *
  * @author caiq-
  */

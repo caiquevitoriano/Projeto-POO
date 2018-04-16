@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.List;
 import modelo.Produto;
 
-/**
+/** Interface Dao de produto
  *
  * @author caiq-
  */

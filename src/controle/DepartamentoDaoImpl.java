@@ -17,6 +17,7 @@ import java.util.List;
 import modelo.Departamento;
 
 /**
+ * Classe de implementação do Dao Departamnto
  *
  * @author caiq-
  */
@@ -24,6 +25,12 @@ public class DepartamentoDaoImpl implements DepartamentoDao {
 
     private final File file;
 
+    /**
+     * Metodo de persistencia
+     *
+     * @author caiq-
+     * @throws java.io.IOException
+     */
     public DepartamentoDaoImpl() throws IOException {
 
         file = new File("departamentos.bin");
@@ -33,6 +40,14 @@ public class DepartamentoDaoImpl implements DepartamentoDao {
         }
     }
 
+    /**
+     * Método utilizado para salvar as informações de um Departamento.
+     *
+     * @param d
+     * @return
+     * @throws java.io.IOException
+     * @throws java.lang.ClassNotFoundException
+     */
     @Override
     public boolean salvar(Departamento d) throws IOException, ClassNotFoundException {
 
@@ -51,6 +66,14 @@ public class DepartamentoDaoImpl implements DepartamentoDao {
 
     }
 
+    /**
+     * Método utilizado para buscar as informações de um Usuario.
+     *
+     * @param numero
+     * @return
+     * @throws java.io.IOException
+     * @throws java.lang.ClassNotFoundException
+     */
     @Override
     public Departamento buscar(String numero) throws IOException, ClassNotFoundException {
         List<Departamento> departamentos;
@@ -65,6 +88,13 @@ public class DepartamentoDaoImpl implements DepartamentoDao {
         return null;
     }
 
+    /**
+     * Método utilizado para listar as informações dos Departamento.
+     *
+     * @return
+     * @throws java.io.IOException
+     * @throws java.lang.ClassNotFoundException
+     */
     @Override
     public List<Departamento> listar() throws IOException, ClassNotFoundException {
         if (file.length() > 0) {
@@ -77,6 +107,14 @@ public class DepartamentoDaoImpl implements DepartamentoDao {
         }
     }
 
+    /**
+     * Método para deletar um Usuario.
+     *
+     * @param d
+     * @return
+     * @throws java.io.IOException
+     * @throws java.lang.ClassNotFoundException
+     */
     @Override
     public boolean deletar(Departamento d) throws IOException, ClassNotFoundException {
         List<Departamento> departamentos = listar();
@@ -89,6 +127,14 @@ public class DepartamentoDaoImpl implements DepartamentoDao {
         }
     }
 
+    /**
+     * Método para atulizar um Departamento.
+     *
+     * @param d
+     * @return
+     * @throws java.io.IOException
+     * @throws java.lang.ClassNotFoundException
+     */
     @Override
     public boolean atualizar(Departamento d) throws IOException, ClassNotFoundException {
         List<Departamento> departamentos = listar();
@@ -104,6 +150,10 @@ public class DepartamentoDaoImpl implements DepartamentoDao {
         return false;
     }
 
+    /**
+     * Método para atulizar os Departamentos.
+     *
+     */
     private void atualizarArquivos(List<Departamento> departamentos) throws FileNotFoundException, IOException {
         ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
 

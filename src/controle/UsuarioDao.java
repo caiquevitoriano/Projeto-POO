@@ -9,8 +9,8 @@ import java.io.IOException;
 import java.util.List;
 import modelo.Usuario;
 
-/**
- *
+/**Interface Dao de usuario
+ * 
  * @author caiq-
  */
 public interface UsuarioDao {

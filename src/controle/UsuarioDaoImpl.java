@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 import modelo.Usuario;
 
 /**
+ * Classe de implementação do Dao Usuario
  *
  * @author caiq-
  */
@@ -26,6 +27,13 @@ public final class UsuarioDaoImpl implements UsuarioDao {
 
     private final File file;
 
+    /**
+     * Metodo de persistencia
+     *
+     * @author caiq-
+     * @throws java.io.IOException
+     * @throws java.lang.ClassNotFoundException
+     */
     public UsuarioDaoImpl() throws IOException, ClassNotFoundException {
 
         file = new File("usuarios.bin");
@@ -42,6 +50,14 @@ public final class UsuarioDaoImpl implements UsuarioDao {
 
     }
 
+    /**
+     * Método utilizado para salvar as informações de um Usuario.
+     *
+     * @param u
+     * @return
+     * @throws java.io.IOException
+     * @throws java.lang.ClassNotFoundException
+     */
     @Override
     public boolean salvar(Usuario u) throws IOException, ClassNotFoundException {
 
@@ -59,6 +75,14 @@ public final class UsuarioDaoImpl implements UsuarioDao {
         }
     }
 
+    /**
+     * Método utilizado para buscar as informações de um Usuario.
+     *
+     * @param nome
+     * @return
+     * @throws java.io.IOException
+     * @throws java.lang.ClassNotFoundException
+     */
     @Override
     public Usuario buscar(String nome) throws IOException, ClassNotFoundException {
 
@@ -74,6 +98,13 @@ public final class UsuarioDaoImpl implements UsuarioDao {
         return null;
     }
 
+    /**
+     * Método utilizado para listar as informações dos Usuarios.
+     *
+     * @return
+     * @throws java.io.IOException
+     * @throws java.lang.ClassNotFoundException
+     */
     @Override
     public List<Usuario> listar() throws IOException, ClassNotFoundException {
 
@@ -87,6 +118,14 @@ public final class UsuarioDaoImpl implements UsuarioDao {
         }
     }
 
+    /**
+     * Método para deletar um Usuario.
+     *
+     * @param u
+     * @return
+     * @throws java.io.IOException
+     * @throws java.lang.ClassNotFoundException
+     */
     @Override
     public boolean deletar(Usuario u) throws IOException, ClassNotFoundException {
         List<Usuario> usuarios = listar();
@@ -99,6 +138,14 @@ public final class UsuarioDaoImpl implements UsuarioDao {
         }
     }
 
+    /**
+     * Método para atulizar um Usuario.
+     *
+     * @param u
+     * @return
+     * @throws java.io.IOException
+     * @throws java.lang.ClassNotFoundException
+     */
     @Override
     public boolean atualizar(Usuario u) throws IOException, ClassNotFoundException {
 
@@ -115,6 +162,15 @@ public final class UsuarioDaoImpl implements UsuarioDao {
         return false;
     }
 
+    /**
+     * Método para fazer login de um Usuario.
+     *
+     * @param nome
+     * @param senha
+     * @return
+     * @throws java.io.IOException
+     * @throws java.lang.ClassNotFoundException
+     */
     @Override
     public Usuario userLogin(String nome, String senha) throws IOException, ClassNotFoundException {
 
@@ -129,6 +185,10 @@ public final class UsuarioDaoImpl implements UsuarioDao {
 
     }
 
+    /**
+     * Método para atulizar os Usuarios.
+     *
+     */
     private void atualizarArquivos(List<Usuario> usuarios) throws FileNotFoundException, IOException {
         ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
 

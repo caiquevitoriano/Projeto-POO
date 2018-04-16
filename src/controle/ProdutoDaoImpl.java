@@ -17,6 +17,7 @@ import java.util.List;
 import modelo.Produto;
 
 /**
+ * Classe de implementação do Dao Produto
  *
  * @author caiq-
  */
@@ -24,6 +25,13 @@ public class ProdutoDaoImpl implements ProdutoDao {
 
     private final File file;
 
+    /**
+     * Metodo de persistencia
+     *
+     * @author caiq-
+     * @throws java.io.IOException
+     * @throws java.lang.ClassNotFoundException
+     */
     public ProdutoDaoImpl() throws IOException, ClassNotFoundException {
 
         file = new File("produtos.bin");
@@ -34,6 +42,14 @@ public class ProdutoDaoImpl implements ProdutoDao {
 
     }
 
+    /**
+     * Método utilizado para salvar as informações de um Produto.
+     *
+     * @param p
+     * @return
+     * @throws java.io.IOException
+     * @throws java.lang.ClassNotFoundException
+     */
     @Override
     public boolean salvar(Produto p) throws IOException, ClassNotFoundException {
         if (buscar(p.getCodigo()) == null) {
@@ -50,6 +66,14 @@ public class ProdutoDaoImpl implements ProdutoDao {
         }
     }
 
+    /**
+     * Método utilizado para buscar as informações de um Produto.
+     *
+     * @param codigo
+     * @return
+     * @throws java.io.IOException
+     * @throws java.lang.ClassNotFoundException
+     */
     @Override
     public Produto buscar(String codigo) throws IOException, ClassNotFoundException {
 
@@ -65,6 +89,13 @@ public class ProdutoDaoImpl implements ProdutoDao {
         return null;
     }
 
+    /**
+     * Método utilizado para listar as informações dos Produto.
+     *
+     * @return
+     * @throws java.io.IOException
+     * @throws java.lang.ClassNotFoundException
+     */
     @Override
     public List<Produto> listar() throws IOException, ClassNotFoundException {
         if (file.length() > 0) {
@@ -77,6 +108,14 @@ public class ProdutoDaoImpl implements ProdutoDao {
         }
     }
 
+    /**
+     * Método para deletar um Produto.
+     *
+     * @param p
+     * @return
+     * @throws java.io.IOException
+     * @throws java.lang.ClassNotFoundException
+     */
     @Override
     public boolean deletar(Produto p) throws IOException, ClassNotFoundException {
         List<Produto> produtos = listar();
@@ -89,6 +128,14 @@ public class ProdutoDaoImpl implements ProdutoDao {
         }
     }
 
+    /**
+     * Método para atulizar um Produto.
+     *
+     * @param p
+     * @return
+     * @throws java.io.IOException
+     * @throws java.lang.ClassNotFoundException
+     */
     @Override
     public boolean atualizar(Produto p) throws IOException, ClassNotFoundException {
         List<Produto> produtos = listar();
@@ -104,6 +151,10 @@ public class ProdutoDaoImpl implements ProdutoDao {
         return false;
     }
 
+    /**
+     * Método para atulizar os Produtos.
+     *
+     */
     private void atualizarArquivos(List<Produto> produtos) throws FileNotFoundException, IOException {
         ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
 

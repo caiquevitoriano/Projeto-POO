@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.List;
 import modelo.Funcionario;
 
-/**
+/** Interface Dao de funcionario
  *
  * @author caiq-
  */

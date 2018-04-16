@@ -17,6 +17,7 @@ import java.util.List;
 import modelo.Funcionario;
 
 /**
+ * Classe de implementação do Dao Funcionario
  *
  * @author caiq-
  */
@@ -24,6 +25,13 @@ public class FuncionarioDaoImpl implements FuncionarioDao {
 
     private final File file;
 
+    /**
+     * Metodo de persistencia
+     *
+     * @author caiq-
+     * @throws java.io.IOException
+     * @throws java.lang.ClassNotFoundException
+     */
     public FuncionarioDaoImpl() throws IOException, ClassNotFoundException {
 
         file = new File("funcionarios.bin");
@@ -34,6 +42,14 @@ public class FuncionarioDaoImpl implements FuncionarioDao {
 
     }
 
+    /**
+     * Método utilizado para salvar as informações de um Funcionario.
+     *
+     * @param f
+     * @return
+     * @throws java.io.IOException
+     * @throws java.lang.ClassNotFoundException
+     */
     @Override
     public boolean salvar(Funcionario f) throws IOException, ClassNotFoundException {
 
@@ -51,6 +67,14 @@ public class FuncionarioDaoImpl implements FuncionarioDao {
         }
     }
 
+    /**
+     * Método utilizado para buscar as informações de um Funcionario.
+     *
+     * @param cpf
+     * @return
+     * @throws java.io.IOException
+     * @throws java.lang.ClassNotFoundException
+     */
     @Override
     public Funcionario buscar(String cpf) throws IOException, ClassNotFoundException {
 
@@ -66,6 +90,13 @@ public class FuncionarioDaoImpl implements FuncionarioDao {
         return null;
     }
 
+    /**
+     * Método utilizado para listar as informações dos Funcionario.
+     *
+     * @return
+     * @throws java.io.IOException
+     * @throws java.lang.ClassNotFoundException
+     */
     @Override
     public List<Funcionario> listar() throws IOException, ClassNotFoundException {
 
@@ -80,6 +111,14 @@ public class FuncionarioDaoImpl implements FuncionarioDao {
 
     }
 
+    /**
+     * Método para deletar um Usuario.
+     *
+     * @param f
+     * @return
+     * @throws java.io.IOException
+     * @throws java.lang.ClassNotFoundException
+     */
     @Override
     public boolean deletar(Funcionario f) throws IOException, ClassNotFoundException {
         List<Funcionario> funcionarios = listar();
@@ -91,7 +130,14 @@ public class FuncionarioDaoImpl implements FuncionarioDao {
             return false;
         }
     }
-
+/**
+     * Método para atulizar um Funcionario.
+     *
+     * @param f     
+     * @return
+     * @throws java.io.IOException
+     * @throws java.lang.ClassNotFoundException
+     */
     @Override
     public boolean atualizar(Funcionario f) throws IOException, ClassNotFoundException {
         List<Funcionario> funcionarios = listar();
@@ -106,7 +152,10 @@ public class FuncionarioDaoImpl implements FuncionarioDao {
 
         return false;
     }
-
+ /**
+     * Método para atulizar os Funcionarios.
+     *
+     */
     private void atualizarArquivos(List<Funcionario> funcionarios) throws FileNotFoundException, IOException {
         ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
 
