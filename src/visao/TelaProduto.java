@@ -5,12 +5,18 @@
  */
 package visao;
 
+import controle.DepartamentoDao;
+import controle.DepartamentoDaoImpl;
 import controle.ProdutoDao;
 import controle.ProdutoDaoImpl;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import modelo.Departamento;
 import modelo.Produto;
 
 /**
@@ -23,15 +29,18 @@ public class TelaProduto extends javax.swing.JFrame {
      * Creates new form TelaProduto
      */
     private ProdutoDao daoProd;
-    
+    private DepartamentoDao daoDep;
+
     public TelaProduto() throws ClassNotFoundException {
         try {
+            daoDep = new DepartamentoDaoImpl();
             daoProd = new ProdutoDaoImpl();
         } catch (IOException ex) {
             Logger.getLogger(TelaDepartamentos.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         initComponents();
+        preComboBox();
     }
 
     /**
@@ -55,6 +64,8 @@ public class TelaProduto extends javax.swing.JFrame {
         valor = new javax.swing.JSpinner();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -110,6 +121,14 @@ public class TelaProduto extends javax.swing.JFrame {
             }
         });
 
+        jLabel4.setText("Departamento:");
+
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -122,18 +141,20 @@ public class TelaProduto extends javax.swing.JFrame {
                     .addComponent(codigo)
                     .addComponent(valor)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jButton1))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)))
+                        .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jButton1)
+                            .addComponent(jLabel4))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -154,7 +175,11 @@ public class TelaProduto extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(valor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(jButton3)
@@ -177,7 +202,7 @@ public class TelaProduto extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       Produto p = montarObjeto();
+        Produto p = montarObjeto();
 
         try {
             if (daoProd.salvar(p)) {
@@ -185,7 +210,8 @@ public class TelaProduto extends javax.swing.JFrame {
                 limparCampo();
             } else {
                 JOptionPane.showMessageDialog(null, "Ja existe!");
-            }} catch (IOException ex) {
+            }
+        } catch (IOException ex) {
             Logger.getLogger(TelaProduto.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(TelaProduto.class.getName()).log(Level.SEVERE, null, ex);
@@ -210,6 +236,7 @@ public class TelaProduto extends javax.swing.JFrame {
             nome.setText(p.getNome());
 //            codigo.setText(p.getCodigo());
             valor.setValue(p.getValor());
+            jComboBox1.setSelectedItem(p.getDepartamento());
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -231,20 +258,25 @@ public class TelaProduto extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         Produto p = montarObjeto();
-        
-        try{
-            if(daoProd .deletar(p)){
+
+        try {
+            if (daoProd.deletar(p)) {
                 JOptionPane.showMessageDialog(null, "Removido com sucesso!");
                 limparCampo();
-            } else{
+            } else {
                 JOptionPane.showMessageDialog(null, "Usuario não encontrado");
             }
-        } catch(IOException ex){
+        } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "falha!");
         } catch (ClassNotFoundException ex) {
-           JOptionPane.showMessageDialog(null, "classe n encontrada");
+            JOptionPane.showMessageDialog(null, "classe n encontrada");
         }
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+
+
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -291,9 +323,11 @@ public class TelaProduto extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField nome;
@@ -301,24 +335,43 @@ public class TelaProduto extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private Produto montarObjeto() {
-        
+
         Produto p;
-        
+
         p = new Produto();
-        
+
         p.setNome(nome.getText());
         p.setCodigo(codigo.getText());
         p.setValor((float) valor.getValue());
-        
+        p.setDepartamento((String) jComboBox1.getSelectedItem());
+
         return p;
 
     }
 
     private void limparCampo() {
-            
+
         nome.setText("");
         codigo.setText("");
         valor.setValue(0);
+        
+
+    }
+
+    private void preComboBox() {
+
+        List<Departamento> departamentos;
+        try {
+            departamentos = daoDep.listar();
+
+            for (Departamento d : departamentos) {
+                jComboBox1.addItem(d.toString());
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(TelaProduto.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(TelaProduto.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 }

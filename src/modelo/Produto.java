@@ -17,11 +17,13 @@ public class Produto implements Serializable{
     private String nome;
     private String codigo;
     private float valor;
+    private String departamento;
 
-    public Produto(String nome, String codigo, float valor) {
+    public Produto(String nome, String codigo, float valor, String departamento) {
         this.nome = nome;
         this.codigo = codigo;
         this.valor = valor;
+        this.departamento = departamento;
     }
 
     public Produto() {
@@ -51,12 +53,21 @@ public class Produto implements Serializable{
         this.valor = valor;
     }
 
+    public String getDepartamento() {
+        return departamento;
+    }
+
+    public void setDepartamento(String departamento) {
+        this.departamento = departamento;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 73 * hash + Objects.hashCode(this.nome);
-        hash = 73 * hash + Objects.hashCode(this.codigo);
-        hash = 73 * hash + Float.floatToIntBits(this.valor);
+        int hash = 7;
+        hash = 53 * hash + Objects.hashCode(this.nome);
+        hash = 53 * hash + Objects.hashCode(this.codigo);
+        hash = 53 * hash + Float.floatToIntBits(this.valor);
+        hash = 53 * hash + Objects.hashCode(this.departamento);
         return hash;
     }
 
@@ -81,9 +92,15 @@ public class Produto implements Serializable{
         if (!Objects.equals(this.codigo, other.codigo)) {
             return false;
         }
+        if (!Objects.equals(this.departamento, other.departamento)) {
+            return false;
+        }
         return true;
     }
 
+    
+    
+   
     @Override
     public String toString() {
         return "Produto{" + "nome=" + nome + ", codigo=" + codigo + ", valor=" + valor + '}';

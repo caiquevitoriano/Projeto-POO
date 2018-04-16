@@ -120,10 +120,10 @@ public class TelaListarProduto extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String titulos[] = {"Nome", "Codigo", "Valor"};
+        String titulos[] = {"Nome", "Codigo", "Valor", "Departamento"};
 
         String dados[][];
-        dados = new String[produtos.size()][3];
+        dados = new String[produtos.size()][4];
 
         for (int i = 0; i < produtos.size(); i++) {
 
@@ -132,6 +132,7 @@ public class TelaListarProduto extends javax.swing.JFrame {
             dados[i][0] = p.getNome();
             dados[i][1] = p.getCodigo();
             dados[i][2] = ("" + p.getValor());
+            dados[i][3] = p.getDepartamento();
 
         }
 
