@@ -8,6 +8,7 @@ package visao;
 import controle.FuncionarioDao;
 import controle.FuncionarioDaoImpl;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -54,7 +55,7 @@ public class TelaFuncionario extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         cpf = new javax.swing.JFormattedTextField();
-        dataNasc = new javax.swing.JFormattedTextField();
+        dataNasc = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -114,12 +115,6 @@ public class TelaFuncionario extends javax.swing.JFrame {
             ex.printStackTrace();
         }
 
-        try {
-            dataNasc.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -128,7 +123,6 @@ public class TelaFuncionario extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(dataNasc)
                     .addComponent(nome)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -142,7 +136,10 @@ public class TelaFuncionario extends javax.swing.JFrame {
                                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(cpf))
+                    .addComponent(cpf)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(dataNasc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -163,7 +160,7 @@ public class TelaFuncionario extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(dataNasc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 108, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(jButton3)
@@ -217,7 +214,7 @@ public class TelaFuncionario extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "não encontrado");
         } else {
             nome.setText(f.getNome());
-            dataNasc.setText(f.getDataNasc());
+            dataNasc.setDateFormatString(f.getDataNasc());
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -291,7 +288,7 @@ public class TelaFuncionario extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFormattedTextField cpf;
-    private javax.swing.JFormattedTextField dataNasc;
+    private com.toedter.calendar.JDateChooser dataNasc;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -311,7 +308,11 @@ public class TelaFuncionario extends javax.swing.JFrame {
 
         f.setNome(nome.getText());
         f.setCpf(cpf.getText());
-        f.setDataNasc(dataNasc.getText());
+        
+        SimpleDateFormat formatarData = new SimpleDateFormat("dd/MM/yyyy");        
+        String dataFormatada = formatarData.format(dataNasc.getDate());
+        
+        f.setDataNasc(dataFormatada);
 
         return f;
     }
@@ -319,6 +320,6 @@ public class TelaFuncionario extends javax.swing.JFrame {
     private void limparCampo() {
         nome.setText("");
         cpf.setText("");
-        dataNasc.setText("");
+        dataNasc.setDateFormatString("");
     }
 }
