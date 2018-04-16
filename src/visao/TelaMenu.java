@@ -5,6 +5,8 @@
  */
 package visao;
 
+import controle.DepartamentoDao;
+import controle.DepartamentoDaoImpl;
 import controle.FuncionarioDao;
 import controle.FuncionarioDaoImpl;
 import controle.UsuarioDao;
@@ -12,6 +14,7 @@ import controle.UsuarioDaoImpl;
 import java.io.IOException;
 import java.util.List;
 import javax.swing.JOptionPane;
+import modelo.Departamento;
 import modelo.Funcionario;
 import modelo.Usuario;
 
@@ -29,6 +32,9 @@ public class TelaMenu extends javax.swing.JFrame {
 
     private FuncionarioDao daoFunc;
     private Funcionario funcionario;
+    
+    private DepartamentoDao daoDep;
+    private Departamento departamento;
 
     public TelaMenu() {
         initComponents();
@@ -39,6 +45,7 @@ public class TelaMenu extends javax.swing.JFrame {
         try {
             daoUser = new UsuarioDaoImpl();
             daoFunc = new FuncionarioDaoImpl();
+            daoDep = new DepartamentoDaoImpl();
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "algum erro");
         }
@@ -74,6 +81,9 @@ public class TelaMenu extends javax.swing.JFrame {
         jToggleButton1 = new javax.swing.JToggleButton();
         jLabel3 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jButton5 = new javax.swing.JButton();
 
         jLabel1.setText("jLabel1");
 
@@ -126,6 +136,22 @@ public class TelaMenu extends javax.swing.JFrame {
             }
         });
 
+        jButton4.setText("Criar/Editar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Departamentos");
+
+        jButton5.setText("Listar");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -142,6 +168,11 @@ public class TelaMenu extends javax.swing.JFrame {
                     .addComponent(jToggleButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel3)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel4)
+                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -151,15 +182,18 @@ public class TelaMenu extends javax.swing.JFrame {
                 .addGap(129, 129, 129)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel3))
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jToggleButton1))
+                    .addComponent(jToggleButton1)
+                    .addComponent(jButton4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(jButton3)
+                    .addComponent(jButton5))
                 .addGap(0, 134, Short.MAX_VALUE))
         );
 
@@ -212,7 +246,25 @@ public class TelaMenu extends javax.swing.JFrame {
             telaListarFuncionario.setVisible(true);
         } catch (IOException | ClassNotFoundException ex) {
             JOptionPane.showMessageDialog(null, "Falha ao ler arquivo");
+
         }    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        TelaDepartamentos telaDepartamentos = new TelaDepartamentos();
+        telaDepartamentos.setVisible(true);
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+         try {
+            List<Departamento> departamentos = daoDep.listar();
+
+            TelaListarDepartamentos telaListarDepartamentos = new TelaListarDepartamentos(departamentos);
+            telaListarDepartamentos.setVisible(true);
+        } catch (IOException | ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Falha ao ler arquivo");
+        }
+       
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -253,11 +305,15 @@ public class TelaMenu extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
 }
+
