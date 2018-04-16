@@ -24,6 +24,9 @@ public class Produto implements Serializable{
         this.valor = valor;
     }
 
+    public Produto() {
+    }
+
     public String getNome() {
         return nome;
     }

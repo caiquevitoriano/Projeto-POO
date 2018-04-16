@@ -5,33 +5,32 @@
  */
 package visao;
 
-import controle.DepartamentoDao;
-import controle.DepartamentoDaoImpl;
+import controle.ProdutoDao;
+import controle.ProdutoDaoImpl;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import modelo.Departamento;
+import modelo.Produto;
 
 /**
  *
  * @author caiq-
  */
-public class TelaDepartamentos extends javax.swing.JFrame {
+public class TelaProduto extends javax.swing.JFrame {
 
     /**
-     * Creates new form TelaDepartamentos
+     * Creates new form TelaProduto
      */
-    private DepartamentoDao daoDep;
-
-    public TelaDepartamentos() {
-
+    private ProdutoDao daoProd;
+    
+    public TelaProduto() throws ClassNotFoundException {
         try {
-            daoDep = new DepartamentoDaoImpl();
+            daoProd = new ProdutoDaoImpl();
         } catch (IOException ex) {
             Logger.getLogger(TelaDepartamentos.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
         initComponents();
     }
 
@@ -49,9 +48,11 @@ public class TelaDepartamentos extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         nome = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        numero = new javax.swing.JTextField();
+        codigo = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
+        valor = new javax.swing.JSpinner();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
 
@@ -75,7 +76,7 @@ public class TelaDepartamentos extends javax.swing.JFrame {
 
         jLabel1.setText("Nome:");
 
-        jLabel2.setText("Numero:");
+        jLabel2.setText("Codigo:");
 
         jButton1.setText("Buscar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -84,12 +85,16 @@ public class TelaDepartamentos extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setText("Valor:");
+
         jButton2.setText("Salvar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
+
+        valor.setModel(new javax.swing.SpinnerNumberModel(0.0f, null, null, 0.1f));
 
         jButton3.setText("Atualizar");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -114,19 +119,21 @@ public class TelaDepartamentos extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(nome)
-                    .addComponent(numero)
+                    .addComponent(codigo)
+                    .addComponent(valor)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel2)
+                            .addComponent(jLabel3)
                             .addComponent(jButton1))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)))
+                        .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -140,10 +147,14 @@ public class TelaDepartamentos extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(numero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(codigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(valor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(jButton3)
@@ -166,47 +177,47 @@ public class TelaDepartamentos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Departamento d = montarObjeto();
+       Produto p = montarObjeto();
 
         try {
-            if (daoDep.salvar(d)) {
+            if (daoProd.salvar(p)) {
                 JOptionPane.showMessageDialog(null, "Salvou!");
                 limparCampo();
             } else {
                 JOptionPane.showMessageDialog(null, "Ja existe!");
-            }
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "falha ao ler");
+            }} catch (IOException ex) {
+            Logger.getLogger(TelaProduto.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            JOptionPane.showMessageDialog(null, "classe n encontrada");
+            Logger.getLogger(TelaProduto.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Departamento d = null;
+        Produto p = null;
 
         try {
-            d = daoDep.buscar(numero.getText());
+            p = daoProd.buscar(codigo.getText());
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Falha");
         } catch (ClassNotFoundException ex) {
             JOptionPane.showMessageDialog(null, "não achou");
         }
 
-        if (d == null) {
+        if (p == null) {
             JOptionPane.showMessageDialog(null, "não encontrado");
         } else {
-            nome.setText(d.getNome());
-            numero.setText(d.getNumero());
+            nome.setText(p.getNome());
+//            codigo.setText(p.getCodigo());
+            valor.setValue(p.getValor());
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        Departamento d = montarObjeto();
+        Produto p = montarObjeto();
 
         try {
-            if (daoDep.atualizar(d)) {
+            if (daoProd.atualizar(p)) {
                 JOptionPane.showMessageDialog(null, "Atualizado");
             } else {
                 JOptionPane.showMessageDialog(null, "Nãp encontrado");
@@ -219,10 +230,10 @@ public class TelaDepartamentos extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        Departamento d = montarObjeto();
+        Produto p = montarObjeto();
         
         try{
-            if(daoDep.deletar(d)){
+            if(daoProd .deletar(p)){
                 JOptionPane.showMessageDialog(null, "Removido com sucesso!");
                 limparCampo();
             } else{
@@ -252,52 +263,62 @@ public class TelaDepartamentos extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaDepartamentos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaDepartamentos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaDepartamentos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaDepartamentos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaDepartamentos().setVisible(true);
+                try {
+                    new TelaProduto().setVisible(true);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(TelaProduto.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField codigo;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField nome;
-    private javax.swing.JTextField numero;
+    private javax.swing.JSpinner valor;
     // End of variables declaration//GEN-END:variables
 
-    private Departamento montarObjeto() {
-        Departamento d;
-
-        d = new Departamento();
-
-        d.setNome(nome.getText());
-        d.setNumero(numero.getText());
-
-        return d;
+    private Produto montarObjeto() {
+        
+        Produto p;
+        
+        p = new Produto();
+        
+        p.setNome(nome.getText());
+        p.setCodigo(codigo.getText());
+        p.setValor((float) valor.getValue());
+        
+        return p;
 
     }
 
     private void limparCampo() {
-
+            
         nome.setText("");
-        numero.setText("");
+        codigo.setText("");
+        valor.setValue(0);
+
     }
 }
