@@ -35,7 +35,7 @@ public final class UsuarioDaoImpl implements UsuarioDao {
         }
 
         try {
-            this.salvar(new Usuario("a", "a"));
+            this.salvar(new Usuario("admin", "admin"));
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(UsuarioDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
