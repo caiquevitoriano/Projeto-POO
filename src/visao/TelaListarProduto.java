@@ -8,32 +8,27 @@ package visao;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-import modelo.Departamento;
 import modelo.Produto;
 
 /**
  *
  * @author caiq-
  */
-public class TelaListarDepartamentos extends javax.swing.JFrame {
+public class TelaListarProduto extends javax.swing.JFrame {
 
     /**
-     * Creates new form TelaListarDepartamentos
+     * Creates new form TelaListarProduto
      */
-    private List<Departamento> departamentos;
-    
-    public TelaListarDepartamentos() {
+    private List<Produto> produtos;
+
+    public TelaListarProduto() {
         initComponents();
     }
 
-    TelaListarDepartamentos(List<Departamento> departamentos) {
-        this.departamentos = departamentos;
+    TelaListarProduto(List<Produto> produtos) {
+        this.produtos = produtos;
         initComponents();
     }
-
- 
-
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -50,8 +45,7 @@ public class TelaListarDepartamentos extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setResizable(false);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -98,17 +92,17 @@ public class TelaListarDepartamentos extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton1)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -126,18 +120,18 @@ public class TelaListarDepartamentos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String titulos[] = {"Nome", "Número"};
+        String titulos[] = {"Nome", "Codigo", "Valor"};
 
         String dados[][];
-        dados = new String[departamentos.size()][2];
+        dados = new String[produtos.size()][3];
 
-        for (int i = 0; i < departamentos.size(); i++) {
+        for (int i = 0; i < produtos.size(); i++) {
 
-            Departamento d = departamentos.get(i);
+            Produto p = produtos.get(i);
 
-            dados[i][0] = d.getNome();
-            dados[i][1] = d.getNumero();
-            
+            dados[i][0] = p.getNome();
+            dados[i][1] = p.getCodigo();
+            dados[i][2] = ("" + p.getValor());
 
         }
 
@@ -163,20 +157,20 @@ public class TelaListarDepartamentos extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaListarDepartamentos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaListarProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaListarDepartamentos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaListarProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaListarDepartamentos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaListarProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaListarDepartamentos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaListarProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaListarDepartamentos().setVisible(true);
+                new TelaListarProduto().setVisible(true);
             }
         });
     }

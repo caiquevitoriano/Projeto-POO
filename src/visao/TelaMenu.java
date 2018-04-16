@@ -9,13 +9,18 @@ import controle.DepartamentoDao;
 import controle.DepartamentoDaoImpl;
 import controle.FuncionarioDao;
 import controle.FuncionarioDaoImpl;
+import controle.ProdutoDao;
+import controle.ProdutoDaoImpl;
 import controle.UsuarioDao;
 import controle.UsuarioDaoImpl;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import modelo.Departamento;
 import modelo.Funcionario;
+import modelo.Produto;
 import modelo.Usuario;
 
 /**
@@ -35,6 +40,9 @@ public class TelaMenu extends javax.swing.JFrame {
     
     private DepartamentoDao daoDep;
     private Departamento departamento;
+    
+    private ProdutoDao daoProd;
+    private Produto produto;
 
     public TelaMenu() {
         initComponents();
@@ -46,6 +54,7 @@ public class TelaMenu extends javax.swing.JFrame {
             daoUser = new UsuarioDaoImpl();
             daoFunc = new FuncionarioDaoImpl();
             daoDep = new DepartamentoDaoImpl();
+            daoProd = new ProdutoDaoImpl();
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "algum erro");
         }
@@ -53,16 +62,7 @@ public class TelaMenu extends javax.swing.JFrame {
         initComponents();
     }
 
-//    TelaMenu(Funcionario funcionario) throws ClassNotFoundException {
-//        this.funcionario = funcionario;
-//        try {
-//            daoFunc = new FuncionarioDaoImpl();
-//        } catch (IOException ex) {
-//            JOptionPane.showMessageDialog(null, "algum erro");
-//        }
-//
-//        initComponents();
-//    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -86,6 +86,7 @@ public class TelaMenu extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
+        jButton7 = new javax.swing.JButton();
 
         jLabel1.setText("jLabel1");
 
@@ -163,6 +164,13 @@ public class TelaMenu extends javax.swing.JFrame {
 
         jLabel5.setText("Produtos:");
 
+        jButton7.setText("Listar");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -185,9 +193,10 @@ public class TelaMenu extends javax.swing.JFrame {
                     .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton6)
-                    .addComponent(jLabel5))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel5)
+                    .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -210,7 +219,8 @@ public class TelaMenu extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(jButton3)
-                    .addComponent(jButton5))
+                    .addComponent(jButton5)
+                    .addComponent(jButton7))
                 .addGap(0, 134, Short.MAX_VALUE))
         );
 
@@ -284,9 +294,25 @@ public class TelaMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        TelaProduto telaProduto = new TelaProduto();
+        TelaProduto telaProduto = null;
+        try {
+            telaProduto = new TelaProduto();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
         telaProduto.setVisible(true);
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        try {
+            List<Produto> produtos = daoProd.listar();
+
+            TelaListarProduto telaListarProduto = new TelaListarProduto(produtos);
+            telaListarProduto.setVisible(true);
+        } catch (IOException | ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Falha ao ler arquivo");
+        }
+    }//GEN-LAST:event_jButton7ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -330,6 +356,7 @@ public class TelaMenu extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
