@@ -126,7 +126,7 @@ public class TelaProduto extends javax.swing.JFrame {
             }
         });
 
-        valor.setModel(new javax.swing.SpinnerNumberModel(0.0f, null, null, 0.1f));
+        valor.setModel(new javax.swing.SpinnerNumberModel(1.0f, 0.1f, null, 0.1f));
 
         jButton3.setText("Atualizar");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -223,19 +223,23 @@ public class TelaProduto extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Produto p = montarObjeto();
+        if (campoVazio() == false) {
+            JOptionPane.showMessageDialog(null, "Campo invalido");
+        } else {
+            Produto p = montarObjeto();
 
-        try {
-            if (daoProd.salvar(p)) {
-                JOptionPane.showMessageDialog(null, "Salvou!");
-                limparCampo();
-            } else {
-                JOptionPane.showMessageDialog(null, "Ja existe!");
+            try {
+                if (daoProd.salvar(p)) {
+                    JOptionPane.showMessageDialog(null, "Salvou!");
+                    limparCampo();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Ja existe!");
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(TelaProduto.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(TelaProduto.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (IOException ex) {
-            Logger.getLogger(TelaProduto.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(TelaProduto.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -262,7 +266,10 @@ public class TelaProduto extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        Produto p = montarObjeto();
+        if(campoVazio() == false){
+            JOptionPane.showMessageDialog(null, "Campo Ivalido");
+        }else{
+           Produto p = montarObjeto();
 
         try {
             if (daoProd.atualizar(p)) {
@@ -274,7 +281,10 @@ public class TelaProduto extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "FALHA");
         } catch (ClassNotFoundException ex) {
             JOptionPane.showMessageDialog(null, "classe não encontrada");
+        } 
         }
+        
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -376,8 +386,7 @@ public class TelaProduto extends javax.swing.JFrame {
 
         nome.setText("");
         codigo.setText("");
-        valor.setValue(0);
-        
+        valor.setValue(0.1);
 
     }
 
@@ -396,5 +405,9 @@ public class TelaProduto extends javax.swing.JFrame {
             Logger.getLogger(TelaProduto.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+
+    private boolean campoVazio() {
+        return !(nome.getText().trim().isEmpty() || codigo.getText().trim().isEmpty());
     }
 }

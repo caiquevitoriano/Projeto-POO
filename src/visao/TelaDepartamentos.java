@@ -33,7 +33,7 @@ public class TelaDepartamentos extends javax.swing.JFrame {
         }
 
         initComponents();
-         this.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -195,20 +195,25 @@ public class TelaDepartamentos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Departamento d = montarObjeto();
+        if (campoVazio() == false) {
+            JOptionPane.showMessageDialog(null, "Campo Vazio!");
+        } else {
+            Departamento d = montarObjeto();
 
-        try {
-            if (daoDep.salvar(d)) {
-                JOptionPane.showMessageDialog(null, "Salvou!");
-                limparCampo();
-            } else {
-                JOptionPane.showMessageDialog(null, "Ja existe!");
+            try {
+                if (daoDep.salvar(d)) {
+                    JOptionPane.showMessageDialog(null, "Salvou!");
+                    limparCampo();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Ja existe!");
+                }
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "falha ao ler");
+            } catch (ClassNotFoundException ex) {
+                JOptionPane.showMessageDialog(null, "classe não encontrada");
             }
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "falha ao ler");
-        } catch (ClassNotFoundException ex) {
-            JOptionPane.showMessageDialog(null, "classe n encontrada");
         }
+
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -232,35 +237,44 @@ public class TelaDepartamentos extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        Departamento d = montarObjeto();
+        if (campoVazio() == false) {
 
-        try {
-            if (daoDep.atualizar(d)) {
-                JOptionPane.showMessageDialog(null, "Atualizado");
-            } else {
-                JOptionPane.showMessageDialog(null, "Nãp encontrado");
+            JOptionPane.showMessageDialog(null, "Campo Vazio!");
+
+        } else {
+
+            Departamento d = montarObjeto();
+
+            try {
+                if (daoDep.atualizar(d)) {
+                    JOptionPane.showMessageDialog(null, "Atualizado");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Nãp encontrado");
+                }
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "FALHA");
+            } catch (ClassNotFoundException ex) {
+                JOptionPane.showMessageDialog(null, "classe não encontrada");
             }
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "FALHA");
-        } catch (ClassNotFoundException ex) {
-            JOptionPane.showMessageDialog(null, "classe não encontrada");
         }
+
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         Departamento d = montarObjeto();
-        
-        try{
-            if(daoDep.deletar(d)){
+
+        try {
+            if (daoDep.deletar(d)) {
                 JOptionPane.showMessageDialog(null, "Removido com sucesso!");
                 limparCampo();
-            } else{
+            } else {
                 JOptionPane.showMessageDialog(null, "Usuario não encontrado");
             }
-        } catch(IOException ex){
+        } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "falha!");
         } catch (ClassNotFoundException ex) {
-           JOptionPane.showMessageDialog(null, "classe n encontrada");
+            JOptionPane.showMessageDialog(null, "classe n encontrada");
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -329,6 +343,10 @@ public class TelaDepartamentos extends javax.swing.JFrame {
     private void limparCampo() {
 
         nome.setText("");
-        numero.setText("");
+        numero.setText("   ");
+    }
+
+    private boolean campoVazio() {
+        return !(nome.getText().trim().isEmpty() || numero.getText().equals("   "));
     }
 }

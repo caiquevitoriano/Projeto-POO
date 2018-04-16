@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import modelo.Funcionario;
 
@@ -158,7 +159,7 @@ public class TelaFuncionario extends javax.swing.JFrame {
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(cpf)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(dataNasc, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(dataNasc, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -203,19 +204,28 @@ public class TelaFuncionario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Funcionario f = montarObjeto();
+        if (campoVazio() == false) {
 
-        try {
-            if (daoFunc.salvar(f)) {
-                JOptionPane.showMessageDialog(null, "Salvou!");
-                limparCampo();
-            } else {
-                JOptionPane.showMessageDialog(null, "Ja existe!");
+            JOptionPane.showMessageDialog(null, "Campo Vazio!");
+            this.dispose();
+            new TelaFuncionario().setVisible(true);
+
+        } else {
+
+            Funcionario f = montarObjeto();
+
+            try {
+                if (daoFunc.salvar(f)) {
+                    JOptionPane.showMessageDialog(null, "Salvou!");
+                    limparCampo();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Ja existe!");
+                }
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "falha ao ler");
+            } catch (ClassNotFoundException ex) {
+                JOptionPane.showMessageDialog(null, "classe n encontrada");
             }
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "falha ao ler");
-        } catch (ClassNotFoundException ex) {
-            JOptionPane.showMessageDialog(null, "classe n encontrada");
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -256,18 +266,18 @@ public class TelaFuncionario extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         Funcionario f = montarObjeto();
-        
-        try{
-            if(daoFunc.deletar(f)){
+
+        try {
+            if (daoFunc.deletar(f)) {
                 JOptionPane.showMessageDialog(null, "Removido com sucesso!");
                 limparCampo();
-            } else{
+            } else {
                 JOptionPane.showMessageDialog(null, "Usuario não encontrado");
             }
-        } catch(IOException ex){
+        } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "falha!");
         } catch (ClassNotFoundException ex) {
-           JOptionPane.showMessageDialog(null, "classe n encontrada");
+            JOptionPane.showMessageDialog(null, "classe n encontrada");
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -325,16 +335,15 @@ public class TelaFuncionario extends javax.swing.JFrame {
 
     private Funcionario montarObjeto() {
         Funcionario f;
-
         f = new Funcionario();
-
+        
         f.setNome(nome.getText());
         f.setCpf(cpf.getText());
-        
-        SimpleDateFormat formatarData = new SimpleDateFormat("dd/MM/yyyy");        
+
+        SimpleDateFormat formatarData = new SimpleDateFormat("dd/MM/yyyy");
         String dataFormatada = formatarData.format(dataNasc.getDate());
-        
-        f.setDataNasc(dataFormatada);
+
+        f.setDataNasc(dataFormatada);        
 
         return f;
     }
@@ -343,5 +352,10 @@ public class TelaFuncionario extends javax.swing.JFrame {
         nome.setText("");
         cpf.setText("");
         dataNasc.setDateFormatString("");
+    }
+
+    private boolean campoVazio() {
+
+        return !(nome.getText().trim().isEmpty() || cpf.getText().equals("   .   .   -  ") || dataNasc.getDate() == null);
     }
 }

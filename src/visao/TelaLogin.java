@@ -45,9 +45,7 @@ public class TelaLogin extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(800, 500));
         setMinimumSize(new java.awt.Dimension(800, 500));
-        setPreferredSize(new java.awt.Dimension(800, 500));
         setResizable(false);
         getContentPane().setLayout(null);
 
@@ -82,41 +80,47 @@ public class TelaLogin extends javax.swing.JFrame {
 
         jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\caiq-\\Documents\\Projeto-POO\\img\\home.png")); // NOI18N
         getContentPane().add(jLabel4);
-        jLabel4.setBounds(350, 60, 130, 140);
+        jLabel4.setBounds(340, 60, 130, 140);
 
         jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\caiq-\\Documents\\Projeto-POO\\img\\wall.jpg")); // NOI18N
         jLabel3.setMaximumSize(new java.awt.Dimension(800, 500));
         jLabel3.setMinimumSize(new java.awt.Dimension(800, 500));
         jLabel3.setPreferredSize(new java.awt.Dimension(800, 500));
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(10, 0, 890, 600);
+        jLabel3.setBounds(0, 0, 890, 600);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-        String senhaText = new String(senha.getPassword());
-        UsuarioDao usuarios = null;
+        if (verificarCampo() == false) {
+            JOptionPane.showConfirmDialog(null, "Campo Vazio");
+        } else {
+            
+            String senhaText = new String(senha.getPassword());
+            UsuarioDao usuarios = null;
 
-        try {
+            try {
+                usuarios = new UsuarioDaoImpl();
+                Usuario logado = usuarios.userLogin(nome.getText(), senhaText);
 
-            usuarios = new UsuarioDaoImpl();
-            Usuario logado = usuarios.userLogin(nome.getText(), senhaText);
+                if (logado != null) {
+                    TelaMenu menu = new TelaMenu(logado);
+                    this.setLocationRelativeTo(null);
+                    menu.setVisible(true);
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Erro no email ou senha, "
+                            + "verifique se informou corretamente e tente de novo!");
+                }
 
-            if (logado != null) {
-                TelaMenu menu = new TelaMenu(logado);
-                this.setLocationRelativeTo(null);
-                menu.setVisible(true);
-                this.dispose();
-            } else {
-                JOptionPane.showMessageDialog(null, "Erro no email ou senha, "
-                        + "verifique se infromou corretamente e tente de novo!");
+            } catch (IOException | ClassNotFoundException ex) {
+                Logger.getLogger(TelaLogin.class.getName()).log(Level.SEVERE, null, ex);
             }
-
-        } catch (IOException | ClassNotFoundException ex) {
-            Logger.getLogger(TelaLogin.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void nomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nomeActionPerformed
@@ -167,4 +171,10 @@ public class TelaLogin extends javax.swing.JFrame {
     private javax.swing.JTextField nome;
     private javax.swing.JPasswordField senha;
     // End of variables declaration//GEN-END:variables
+
+    private boolean verificarCampo() {
+
+        return !(nome.getText().trim().isEmpty() | senha.getText().trim().isEmpty());
+
+    }
 }

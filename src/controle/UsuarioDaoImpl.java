@@ -61,7 +61,7 @@ public final class UsuarioDaoImpl implements UsuarioDao {
 
     @Override
     public Usuario buscar(String nome) throws IOException, ClassNotFoundException {
-       
+
         List<Usuario> usuarios;
         usuarios = listar();
 
@@ -76,7 +76,7 @@ public final class UsuarioDaoImpl implements UsuarioDao {
 
     @Override
     public List<Usuario> listar() throws IOException, ClassNotFoundException {
-        
+
         if (file.length() > 0) {
 
             ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
@@ -101,7 +101,7 @@ public final class UsuarioDaoImpl implements UsuarioDao {
 
     @Override
     public boolean atualizar(Usuario u) throws IOException, ClassNotFoundException {
-        
+
         List<Usuario> usuarios = listar();
 
         for (int i = 0; i < usuarios.size(); i++) {
@@ -117,6 +117,7 @@ public final class UsuarioDaoImpl implements UsuarioDao {
 
     @Override
     public Usuario userLogin(String nome, String senha) throws IOException, ClassNotFoundException {
+
         List<Usuario> usuarios = listar();
 
         for (Usuario u : usuarios) {
@@ -125,6 +126,7 @@ public final class UsuarioDaoImpl implements UsuarioDao {
             }
         }
         return null;
+
     }
 
     private void atualizarArquivos(List<Usuario> usuarios) throws FileNotFoundException, IOException {

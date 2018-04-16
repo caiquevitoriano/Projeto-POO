@@ -196,37 +196,42 @@ public class TelaUsuario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        
+
         Usuario u = montarObjeto();
-        
-        try{
-            if(daoUser.deletar(u)){
+
+        try {
+            if (daoUser.deletar(u)) {
                 JOptionPane.showMessageDialog(null, "Removido com sucesso!");
                 limparCampo();
-            } else{
+            } else {
                 JOptionPane.showMessageDialog(null, "Usuario não encontrado");
             }
-        } catch(IOException ex){
+        } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "falha!");
         } catch (ClassNotFoundException ex) {
-           JOptionPane.showMessageDialog(null, "classe n encontrada");
+            JOptionPane.showMessageDialog(null, "classe n encontrada");
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Usuario u = montarObjeto();
+        if (verificarCampo() == false) {
+            JOptionPane.showMessageDialog(null, "Campo vazio");
+        } else {
 
-        try {
-            if (daoUser.salvar(u)) {
-                JOptionPane.showMessageDialog(null, "Salvou!");
-                limparCampo();
-            } else {
-                JOptionPane.showMessageDialog(null, "Ja existe!");
+            Usuario u = montarObjeto();
+
+            try {
+                if (daoUser.salvar(u)) {
+                    JOptionPane.showMessageDialog(null, "Salvou!");
+                    limparCampo();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Ja existe!");
+                }
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "falha ao ler");
+            } catch (ClassNotFoundException ex) {
+                JOptionPane.showMessageDialog(null, "classe n encontrada");
             }
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "falha ao ler");
-        } catch (ClassNotFoundException ex) {
-            JOptionPane.showMessageDialog(null, "classe n encontrada");
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -235,7 +240,7 @@ public class TelaUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_nomeActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+
         Usuario u = null;
 
         try {
@@ -257,19 +262,25 @@ public class TelaUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        Usuario u = montarObjeto();
 
-        try {
-            if (daoUser.atualizar(u)) {
-                JOptionPane.showMessageDialog(null, "Atualizado");
-            } else {
-                JOptionPane.showMessageDialog(null, "Não encontrado");
+        if (verificarCampo() == false) {
+            JOptionPane.showMessageDialog(null, "Campo vazio");
+        } else {
+            Usuario u = montarObjeto();
+
+            try {
+                if (daoUser.atualizar(u)) {
+                    JOptionPane.showMessageDialog(null, "Atualizado");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Não encontrado");
+                }
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "FALHA");
+            } catch (ClassNotFoundException ex) {
+                JOptionPane.showMessageDialog(null, "Classe não encontrada");
             }
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "FALHA");
-        } catch (ClassNotFoundException ex) {
-            JOptionPane.showMessageDialog(null, "Classe não encontrada");
         }
+
     }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
@@ -338,6 +349,12 @@ public class TelaUsuario extends javax.swing.JFrame {
 
         nome.setText("");
         senha.setText("");
+
+    }
+
+    private boolean verificarCampo() {
+
+        return !(nome.getText().trim().isEmpty() | senha.getText().trim().isEmpty());
 
     }
 }
